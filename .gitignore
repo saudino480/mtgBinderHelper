@@ -2,3 +2,5 @@ data/*.csv
 data/*.json
 helper/secrets.py
 helper/settings.json
+.ipynb_checkpoints/
+__pycache__
