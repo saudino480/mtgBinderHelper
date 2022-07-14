@@ -18,28 +18,36 @@ class scryAPI:
         self.session = Session()
         self.token = token
         
-    def getCollectionData(self, multiverse_ids):
+    def getCollectionData(self, ids, id_type = ['set_):
+        # list of ids from the df to eventually join back on
+        # 
+        
         url = self.scryURL + "cards/collection/"
         data = []
         divisor = len(multiverse_ids) // 75
-        header = {'Content-Type' : "application/json"}
-        self.session.header.update(header)
         
         # we need to ensure that we are being polite with our API requests
         # scryfall requests you put 50-100ms delay, or do not average more than
         # 10 requests per second.
         # This should do ~1k cards in a little under 30 seconds.
+        
+        # There should be a saved list of the keys that you can query that are
+        # checked before you actually get to pull the information. Alternately
+        # check the docs for if there is a way to just pull specific information
+        # so we are more curtious with our queries.
         while divisor > 0:
             current_ids = multiverse_ids[:75]
             multiverse_ids = multiverse_ids[75:]
             
-            # this needs to be a list of jsons
             parameters = {
                 'identifiers' : [{'multiverse_id': idx} for idx in current_ids]
             }
-            
-            r = self.session.get(url, params=parameters)
-            data = data.append(r.json())
+            if query:
+                r = self.session.get(url, params=parameters)
+                data = data.append(r.json()['data'][0].get(query, 'Category Not Found'))
+            else:
+                r = self.session.get(url, params=parameters)
+                data = data.append(r.json()['data'][0])
             
             divisor -= 1
             time.sleep(2)
@@ -47,9 +55,11 @@ class scryAPI:
         parameters = {
             'identifiers' : [{'multiverse_id': idx} for idx in multiverse_ids]
         }
-        
-        r = self.session.get(url, params = parameters)
-        data = data.append(r.json())
-        
+        if query:
+            r = self.session.get(url, params = parameters)
+            data = data.append(r.json()['data'][0][query])
+        else:
+            r = self.session.get(url, params = parameters)
+            data = data.append(r.json()['data'][0])
         return data
         
