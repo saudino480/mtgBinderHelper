@@ -18,7 +18,7 @@ class scryAPI:
         self.session = Session()
         self.token = token
         
-    def getCollectionData(self, ids, id_type = ['set_):
+    def getCollectionData(self, ids, id_type = ['set_code', 'number']):
         # list of ids from the df to eventually join back on
         # 
         
