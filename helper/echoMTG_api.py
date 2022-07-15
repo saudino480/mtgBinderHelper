@@ -2,6 +2,7 @@ import requests
 from requests import Session
 import secrets
 import json
+import helper as h
 
 user_info = "settings.json"
              
@@ -33,10 +34,8 @@ class echoMTGAPI:
     def inventoryDump(self):
         url = self.api_url + "inventory/dump/" + "auth=" + self.token
         r = self.session.get(url)
-        data = r.json()
-        column_headers = data['headerMap']
-        data = data['inventoryData']
-        return data, column_headers
+        data = r.json()['inventoryData']
+        return data
     
     # we will use this to connect with Scryfall for pricing data
     def cardReference(self):
@@ -44,3 +43,18 @@ class echoMTGAPI:
         r = self.session.get(url)
         data = r.json()['cards']
         return data
+
+    
+    def fullDataDump(self):
+        
+        inventory = self.inventoryDump()
+        reference = self.cardReference()
+        
+        combined_info = h.collator(inventory, reference)
+        
+        cleaned_info = h.name_handler(combined_info, 'name')
+        cleaned_info.set_code = cleaned_info.set_code.str.upper()
+        cleaned_info.fillna('', inplace=True)
+        
+        return cleaned_info
+        

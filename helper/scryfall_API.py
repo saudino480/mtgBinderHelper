@@ -18,13 +18,12 @@ class scryAPI:
         self.session = Session()
         self.token = token
         
-    def getCollectionData(self, ids, id_type = ['set_code', 'number']):
+    def getCollectionData(self, ids, id_type = ['collector_number','set'], query = False):
         # list of ids from the df to eventually join back on
-        # 
         
         url = self.scryURL + "cards/collection/"
         data = []
-        divisor = len(multiverse_ids) // 75
+        divisor = len(ids) // 75
         
         # we need to ensure that we are being polite with our API requests
         # scryfall requests you put 50-100ms delay, or do not average more than
@@ -35,12 +34,14 @@ class scryAPI:
         # checked before you actually get to pull the information. Alternately
         # check the docs for if there is a way to just pull specific information
         # so we are more curtious with our queries.
+        ids.columns = id_type
+        
         while divisor > 0:
-            current_ids = multiverse_ids[:75]
-            multiverse_ids = multiverse_ids[75:]
+            current_ids = ids[:75]
+            ids = ids[75:]
             
             parameters = {
-                'identifiers' : [{'multiverse_id': idx} for idx in current_ids]
+                'identifiers' : [current_ids.to_dict(orient = 'index').values()]
             }
             if query:
                 r = self.session.get(url, params=parameters)
@@ -53,8 +54,10 @@ class scryAPI:
             time.sleep(2)
         
         parameters = {
-            'identifiers' : [{'multiverse_id': idx} for idx in multiverse_ids]
+            'identifiers' : [{id_type[0]: idx[0],
+                              id_type[1]: idx[1]} for idx in ids]
         }
+        
         if query:
             r = self.session.get(url, params = parameters)
             data = data.append(r.json()['data'][0][query])
