@@ -5,6 +5,10 @@ import json
 
 # this takes the two echoMTG dfs and combines them
 def collator(inventory, cardReference):
+    '''
+    collates the two data frames. more robust than merge and since we'll do it
+    constantly.
+    '''
     
     # name formatting
     clean_names = {'i' : "ID",
@@ -26,8 +30,22 @@ def collator(inventory, cardReference):
     
     return inv_df_aug
 
+def promo_helper(set_code, promo):
+    '''
+    helps to remove the P in front of the promo set names
+    '''
+    
+    if not promo:
+        return set_code
+    else:
+        return set_code[1:]
 
 def name_handler(df, col_name, split_on = " \("):
+    '''
+    echoMTG has the names in a specific way "Card Name (Treatment)"
+    and this treatment information is necessary for the last portion
+    '''
+    
     # names include treatment types, and so the 
     split_list = df[col_name].str.split(split_on, n=1)
     name_list = [name[0] for name in split_list]
@@ -211,3 +229,59 @@ def fetch_setnumber(card_info, referenceDB, verbose = False):
         print("-"*50)
         
     return result.number
+
+def price_lookup(card_info, priceDB, verbose = False):
+    # foil, or etched foil is the only thing I care about
+    
+    
+    foil_flag = card_info.foil == 1
+    etched_flag = 'etched' in card_info.treatment.lower()
+ 
+    filtered_prices = priceDB[priceDB['name'] == card_info['name']]
+    if verbose:
+        print("*"*50)
+        print(f'Card name: {card_info["name"]}')
+        print(f'Size of filtered_prices: {filtered_prices.shape[0]}')
+        print(f'Price Collector Number: {filtered_prices.collector_number}')
+        print(f'Inventory Collector Number: {card_info.set_number}')
+        print(f'foil_flag: {foil_flag}')
+        print(f'etched_flag: {etched_flag}')
+    
+    if card_info.set_code in ['BAB', 'PPRE']:
+        
+        warnings.warn("Not implemented for BAB or PPRE yet.")
+        
+        card_info['price'] = np.nan
+        
+        return card_info
+    
+    if card_info.promo:
+        print("Remember to implement grabbing the promo-specific ones from scryfall.")
+    
+    if filtered_prices.shape[0] == 0:
+        filtered_prices = priceDB[priceDB.name.str.contains(card_info['name'])]
+        
+        if filtered_prices.shape[0] == 0:
+            filtered_prices = priceDB[priceDB.name.str.lower() == card_info['name'].lower()]
+    
+    specific_price = filtered_prices[filtered_prices['collector_number'] == card_info.set_number]
+    
+    if etched_flag:
+        key = 'usd_etched'
+    elif foil_flag:
+        key = 'usd_foil'
+    else:
+        key = 'usd'
+    
+    if verbose:
+        print('specific_price:')
+        #pp(specific_price)
+        print(f"specific_price['prices']: {specific_price.loc[::,'prices']}")
+        print(f"Returned price: {specific_price.iloc[0].loc['prices'][key]}",
+              f"Retrieved via key: {key}",
+              sep="\n")
+        print("*"*50)
+    
+    card_info['price'] = specific_price.iloc[0].loc['prices'][key]
+    
+    return card_info
