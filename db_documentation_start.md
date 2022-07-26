@@ -86,7 +86,10 @@ Scryfall
 'printed_text': *STR* Rule box text at time of printing.
        
  
- echoMTG -> after processing
+echoMTG -> after processing
+All date columns are formatted like: "2021-09-27 22:58:08"
+
+ 
 'ID': *INT* ID for the specific card in the inventory, 
 'echo_id': *INT* EchoID for that card, 
 'tradable': *BOOL* Are you willing to trade this card?, 
@@ -103,4 +106,3 @@ Scryfall
 'treatment': *STR, LIST* Type of treatment. May be a list if there are multiple treatments applied to the card (ex. \["Borderless", "Foil Etched"\]),
 'set_number': *INT* Collector number of the card,
 'promo': *BOOL* Is this card a promo?
-

@@ -2,9 +2,9 @@ import requests
 from requests import Session
 import secrets
 import json
-import helper as h
+from helper import helper as h
 
-user_info = "settings.json"
+# user_info = "settings.json"
              
 class echoMTGAPI:
     

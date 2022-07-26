@@ -4,6 +4,7 @@ Main work:
 
 [X] Connect echoMTG to price data and set number
 [ ] Migrate all functions to .py files
+[ ] Docker File to set the framework / env
 [ ] Start to build out SQL dbs to store data in a better way
 [ ] Begin to figure out how to display the information desired
     - These would be...
