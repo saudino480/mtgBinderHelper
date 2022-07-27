@@ -93,10 +93,7 @@ def data_helper(value, cols, table, debug = 0):
 				val = ", ".join(val)
 			data.append(val)
 
-
 	return tuple(data)
-
-
 
 
 def init_db(debug = 1):
@@ -165,7 +162,6 @@ def init_db(debug = 1):
 			db.commit()
 		if debug > 0:
 			print(f"Finished with all cards from {value['name']} to the cardInfo table.")
-
 
 
 @click.command('init-db')

@@ -11,7 +11,7 @@ Main work:
 
 [ ] Fix Nones being stuffed where Falses should go due to function logic
 [ ] Fix Mana Cost for ZNR double-faced cards that have land drops.
-[ ] Fix Legalities -> need to create separate table that holds the legality information
+[ ] Fix Legalities -> use ints to represent. Legality will be a 12-bit number.
 [ ] Build account creation
 [ ] Add CSV upload
 [ ] Add echoMTG api connection
@@ -19,7 +19,13 @@ Main work:
 [ ] Over / Under $1 indicator
 
 
+Low Priority:
 
+[ ] Get Legalities Working
+[ ] Get colors + colorIdentity working
+[ ] Consider if there is a better way for storage of current data types
+[ ] Have Log-In accept email and account name
+[ ] *Upgrade code to SQLAlchemy w/ SQLite hooks in backend*
 
 All of these things are dependant on the above:
 - Add option to pull new values / new inventory

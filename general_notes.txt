@@ -1,0 +1,26 @@
+Set Specific Interactions:
+	- STA JPN cards start after collector number 63
+	- 10E Foils are technically different cards (have the ★ marker) (only set to do this)
+	- WAR JPN planeswalkers have the ★ in the number, can be foil or non-foil
+	- all promo sets start with P, have the ★
+
+	- Any set with Multiple Arts for single collector code (ZEN, ZNR, legacy sets)
+	  will always follow the 249/249a/249b etc naming convention
+
+
+
+Data Documentation Scratchwork:
+
+cardInfo:
+	- legality is a 12-bit integer where each bit represents whether it is legal in that format. Here is Force of Will:
+		0001110000 -> Standard, Pioneer, Modern, Legacy, Vintage, Commander, Pauper, Penny, Alchemy, Explorer, Historic, Brawl
+		Easier than storing the information in 12 additional 2-bit columns.
+
+		Do I care about bannings? Maybe manually label the card? So few cards are banned...
+
+	- colors will be stored as a string; it will be WUBRG, or C if no colors.
+	- Nones are typically representitive of either:
+		- oracle: No text in the textbox.
+		- hasFoil/hasNonFoil: Does not have the relevant category
+		- manaCost: No written manacost (ex: Living End)
+

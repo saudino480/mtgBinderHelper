@@ -8,7 +8,7 @@ CREATE TABLE user (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   username TEXT UNIQUE NOT NULL,
   password TEXT NOT NULL,
-  email TEXT NOT NULL,
+  email TEXT UNIQUE NOT NULL,
   createdAt TIMESTAMP DEFAULT (now()),
   accountType TEXT DEFAULT "user"
 );
@@ -17,6 +17,7 @@ CREATE TABLE collection (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   userId INTEGER,
   cardId INTEGER,
+  priceId INTEGER,
   setCode TEXT,
   setNumber INTEGER,
   isFoil boolean,
@@ -51,6 +52,8 @@ CREATE TABLE cardInfo (
   frameVersion TEXT,
   finishes TEXT,
   layout TEXT,
+  colorIdentity TEXT,
+  colors TEXT,
   manaCost TEXT,
   convertedManaCost INTEGER,
 --  legalities TEXT, the way we fix this is having legalities as a binary representation of which sets are legal
