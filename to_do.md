@@ -3,21 +3,21 @@ Things to still do:
 Main work:
 
 [X] Connect echoMTG to price data and set number
-[ ] Migrate all functions to .py files
-[ ] Docker File to set the framework / env
-[ ] Start to build out SQL dbs to store data in a better way
-[ ] Begin to figure out how to display the information desired
-    - These would be...
-        [ ] Cards under a dollar
-        [ ] Weeks under a dollar
-        [ ] Cards newly over a dollar
-        [ ] Weeks over a dollar
 
 
-Extras:
+[X] SQL Schema.
+    - What questions am I trying to answer?
+        - How much has a card cost, historically? (needs to be a table that has card_ids and price in... long format?)
 
-[ ] Add option to only pull data we don't have from https://mtgjson.com/downloads/all-files/ (we can wait until September until Brother's War to implement this)
-[ ] Add option to pull subset of data (this will be important once I am managing more ~$1 cards)
+
+[ ] Fix Legalities -> need to create separate table that holds the legality information
+[ ] Build account creation
+[ ] Add CSV upload
+[ ] Add echoMTG api connection
+[ ] Add scryfall api connection for pricing
+[ ] Over / Under $1 indicator
+
+
 
 
 All of these things are dependant on the above:
