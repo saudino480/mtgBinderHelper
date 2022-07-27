@@ -53,7 +53,7 @@ CREATE TABLE cardInfo (
   layout TEXT,
   manaCost TEXT,
   convertedManaCost INTEGER,
---  legalities TEXT,
+--  legalities TEXT, the way we fix this is having legalities as a binary representation of which sets are legal
   oracle longtext,
   scryfallId TEXT,
   type TEXT

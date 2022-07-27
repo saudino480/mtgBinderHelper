@@ -9,7 +9,8 @@ Main work:
     - What questions am I trying to answer?
         - How much has a card cost, historically? (needs to be a table that has card_ids and price in... long format?)
 
-
+[ ] Fix Nones being stuffed where Falses should go due to function logic
+[ ] Fix Mana Cost for ZNR double-faced cards that have land drops.
 [ ] Fix Legalities -> need to create separate table that holds the legality information
 [ ] Build account creation
 [ ] Add CSV upload
