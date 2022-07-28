@@ -13,5 +13,7 @@ Project is still a work in progress. Hoping to have the app fulfill the followin
 
 Special thanks to the people working at Flask and Miguel Grinberg for his tutorials on adding tables to Flask applications that you can find [here.](https://github.com/miguelgrinberg/flask-gridjs)
 
+Strech Goals:
+
 - Flexible Search Options
-	- 
+	- You'll be able to filter your collection in a similar way to how the Scryfall filtering system works.
