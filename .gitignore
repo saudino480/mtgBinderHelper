@@ -14,6 +14,7 @@ instance/
 .pytest_cache/
 .coverage
 htmlcov/
+mtgBinderHelper/.DS_Store
 
 dist/
 build/
