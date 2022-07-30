@@ -9,7 +9,7 @@ CREATE TABLE user (
   username TEXT UNIQUE NOT NULL,
   password TEXT NOT NULL,
   email TEXT UNIQUE NOT NULL,
-  createdAt TIMESTAMP DEFAULT (unixepoch()),
+  createdAt TIMESTAMP DEFAULT (CURRENT_TIMESTAMP),
   accountType TEXT DEFAULT "user"
 );
 
@@ -24,8 +24,8 @@ CREATE TABLE collection (
   isTradeable boolean,
   promo boolean,
   treatment TEXT,
-  dateAcquired DATETIME DEFAULT (unixepoch()),
-  dateAdded TIMESTAMP DEFAULT (unixepoch()),
+  dateAcquired DATETIME DEFAULT (CURRENT_TIMESTAMP),
+  dateAdded TIMESTAMP DEFAULT (CURRENT_TIMESTAMP),
   dateUpdated TIMESTAMP
 );
 
@@ -35,7 +35,7 @@ CREATE TABLE priceHistory (
   isFoil boolean,
   isPromo boolean,
   cardId INTEGER,
-  createdAt TIMESTAMP DEFAULT (unixepoch()),
+  createdAt TIMESTAMP DEFAULT (CURRENT_TIMESTAMP),
   updatedAt TIMESTAMP
 );
 

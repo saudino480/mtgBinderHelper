@@ -6,7 +6,7 @@ from werkzeug.exceptions import abort
 from mtgBinderHelper.auth import login_required
 from mtgBinderHelper.db import get_db
 
-bp = Blueprint('collection', __name__, url_prefix = "/collection")
+bp = Blueprint('collection', __name__) #, url_prefix = "/collection")
 
 
 # we will be coming back to actually properly populate the table.
@@ -14,9 +14,10 @@ bp = Blueprint('collection', __name__, url_prefix = "/collection")
 # still work in progress
 @bp.route('/')
 def index():
-	return render_template('/templates/collection/collection_screen.html')
+	return render_template('collection/collection_screen.html')
 
-@app.route('/api/data')
+@bp.route('/api/data')
+
 def data():
 	db = get_db()
 	
@@ -26,6 +27,8 @@ def data():
 	# search/sort  options last if not using
 	# a handler to load in memory - consider dfs?
 	search = request.args.get('search')
+
+	print("search: ", search)
 	if search:
 		yourCards = db.execute(
 			'''
@@ -40,7 +43,7 @@ def data():
 			' ORDER BY dateAcquired DESC', (g.user['id'],)
 			).fetchall()
 
-
+	print(yourCards)
 	sort = request.args.get('sort')
 	#if sort:
 	if False:
@@ -52,9 +55,10 @@ def data():
 				name = 'id'
 			# on pause while I figure out sqlite tricks
 
+	print("this is what your cards look like", yourCards, sep = "\n")
 	return {
-		'data': [card for card in yourCards]
-		'total': len(yourCards)
+		'data': [dict(card) for card in yourCards],
+		'total': len(yourCards),
 	}
 
 # @app.route('/api/data', methods=['POST'])
